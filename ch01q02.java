@@ -14,10 +14,13 @@ public class ch01q01 {
     char[] test3 = {'*'};
     reverseString(test3);
     System.out.println(test3);
+
+    char[] test4 = null;
+    reverseString(test4);
   }
 
   public static void reverseString(char[] input) {
-    if(input.length <= 2) {
+    if(input == null || input.length <= 2) {
       return;
     }
 
