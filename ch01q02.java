@@ -1,5 +1,4 @@
-
-public class ch01q01 {
+public class ch01q02 {
   public static void main(String[] args) {
     System.out.printf("Question: Reverse a C-Style String\n");
 
