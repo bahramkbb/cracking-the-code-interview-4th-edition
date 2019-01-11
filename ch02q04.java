@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ch02q03 {
+public class ch02q04 {
   public static void main(String args[]) {
     System.out.printf("Question: Nth element to the end\n");
 

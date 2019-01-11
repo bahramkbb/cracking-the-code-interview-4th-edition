@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ch02q03 {
+public class ch02q05 {
   public static void main(String args[]) {
     System.out.printf("Question: Find linkedlist loop beginning\n");
 
