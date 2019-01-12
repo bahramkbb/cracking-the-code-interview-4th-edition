@@ -11,19 +11,9 @@ public class ch04q04 {
     tree.insertNode(8);
     tree.insertNode(1);
     tree.insertNode(25);
-    tree.insertNode(15);
+    BinaryTree.TreeNode test = tree.insertNode(15);
 
-    ArrayList<LinkedList<BinaryTree.TreeNode>> test = new ArrayList<LinkedList<BinaryTree.TreeNode>>();
-    test = BinaryTree.getLevelNodes(tree.root);
-
-    for(LinkedList<BinaryTree.TreeNode> list : test)
-    {
-      System.out.println("LEVEL START");
-      for(BinaryTree.TreeNode node: list) {
-        System.out.printf(" %d ", node.data);
-      }
-      System.out.printf("\nLEVEL END\n");
-    }
+    System.out.println(BinaryTree.NextNode(test).data);
   }
 }
 
@@ -34,30 +24,36 @@ public class BinaryTree {
     root = null;
   }
 
-  public void insertNode(int data) {
+  public TreeNode insertNode(int data) {
     if(root == null)
     {
       TreeNode node = new TreeNode(data);
+      node.parent = null;
       root = node;
+      return root;
     } else {
-      insertNodeRecursive(root, data);
+      return insertNodeRecursive(root, data);
     }
   }
 
-  private void insertNodeRecursive(TreeNode node, int data) {
+  private TreeNode insertNodeRecursive(TreeNode node, int data) {
     if (node.data > data) {
       if(node.left == null) {
         TreeNode newNode = new TreeNode(data);
+        newNode.parent = node;
         node.left = newNode;
+        return newNode;
       } else {
-        insertNodeRecursive(node.left, data);
+        return insertNodeRecursive(node.left, data);
       }
     } else {
       if(node.right == null) {
         TreeNode newNode = new TreeNode(data);
+        newNode.parent = node;
         node.right = newNode;
+        return newNode;
       } else {
-        insertNodeRecursive(node.right, data);
+        return insertNodeRecursive(node.right, data);
       }
     }
   }
@@ -89,36 +85,32 @@ public class BinaryTree {
     System.out.println(node.data);
   }
 
-  public static ArrayList<LinkedList<TreeNode>> getLevelNodes(TreeNode root) {
-    if (root == null) return null;
+  public static TreeNode NextNode(TreeNode node) {
+    if (node == null)
+      return null;
 
-    ArrayList<LinkedList<TreeNode>> res = new ArrayList<LinkedList<TreeNode>>();
+    TreeNode result;
 
-    int level = 0;
-    LinkedList<TreeNode> list = new LinkedList<TreeNode>();
-    list.add(root);
-    res.add(0,list);
+    if(node.parent == null || node.right != null) {
+      // left most child of the right node
+      result = node.right;
+      while (result.left != null)
+        result = result.left;
+    } else {
+      while((result = node.parent) != null) {
+        if(result.left == node)
+          break;
 
-    while(true) {
-      list = new LinkedList<TreeNode>();
-      for(TreeNode nextToVisit: res.get(level)) {
-        if(nextToVisit.left != null)
-          list.add(nextToVisit.left);
-        if(nextToVisit.right != null)
-          list.add(nextToVisit.right);
+        node = result;
       }
-
-      if(list.size() == 0)
-        break;
-
-      res.add(++level, list);
     }
 
-    return res;
+    return result;
   }
 
   public class TreeNode {
     public int data;
+    public TreeNode parent;
     public TreeNode left;
     public TreeNode right;
 
