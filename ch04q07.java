@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class ch04q04 {
+public class ch04q07 {
   public static void main(String args[]) {
-    System.out.printf("Question: First commont ancestor\n");
+    System.out.printf("Question: B is Subtree of A\n");
 
     BinaryTree treeA = new BinaryTree();
     treeA.insertNode(10);

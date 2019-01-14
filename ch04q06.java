@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ch04q04 {
+public class ch04q06 {
   public static void main(String args[]) {
     System.out.printf("Question: First commont ancestor\n");
 

@@ -1,19 +1,23 @@
 import java.util.*;
 
-public class ch04q05 {
+public class ch04q08 {
   public static void main(String args[]) {
-    System.out.printf("Question: LinkedList of all nodes at level x\n");
+    System.out.printf("Question: Paths that sum up to a number\n");
 
-    BinaryTree tree = new BinaryTree();
-    tree.insertNode(10);
-    tree.insertNode(20);
-    tree.insertNode(3);
-    tree.insertNode(8);
-    tree.insertNode(1);
-    tree.insertNode(25);
-    BinaryTree.TreeNode test = tree.insertNode(15);
+    BinaryTree treeA = new BinaryTree();
+    treeA.insertNode(10);
+    treeA.insertNode(20);
+    treeA.insertNode(2);
+    treeA.insertNode(8);
+    treeA.insertNode(5);
+    treeA.insertNode(5);
+    treeA.insertNode(1);
+    treeA.insertNode(13);
+    treeA.insertNode(25);
+    treeA.insertNode(15);
 
-    System.out.println(BinaryTree.NextNode(test).data);
+    //BinaryTree.pathsThatSumUp(treeA.root, 30);
+    BinaryTree.pathsThatSumUp(treeA.root, 13);
   }
 }
 
@@ -85,28 +89,51 @@ public class BinaryTree {
     System.out.println(node.data);
   }
 
-  public static TreeNode NextNode(TreeNode node) {
-    if (node == null)
-      return null;
+  public static void pathsThatSumUp(TreeNode root, int value) {
+    if(root == null)
+      return;
 
-    TreeNode result;
+    checkSum(root, value, 0);
 
-    if(node.parent == null || node.right != null) {
-      // left most child of the right node
-      result = node.right;
-      while (result.left != null)
-        result = result.left;
-    } else {
-      while((result = node.parent) != null) {
-        if(result.left == node)
-          break;
+    pathsThatSumUp(root.left, value);
+    pathsThatSumUp(root.right, value);
+  }
 
-        node = result;
-      }
+  public static boolean checkSum(TreeNode root, int value, int sum) {
+    if(root == null || root.data > value || sum > value)
+      return false;
+
+    sum += root.data;
+
+    if(sum == value) {
+      // PRINT PARENTS TILL YOU VALUE REACHED!
+      System.out.println("Found new Route:");
+      printParentsTillValue(root, value, 0);
+      System.out.println();
+      return true;
     }
 
-    return result;
+    else if(sum > value) {
+      return false;
+    }
+
+    else {
+      return checkSum(root.left, value, sum) || checkSum(root.right, value, sum);
+    }
   }
+
+  public static void printParentsTillValue(TreeNode root, int value, int sum) {
+    if(root == null || root.data > value || sum > value)
+      return;
+
+    sum += root.data;
+    System.out.printf(" %d ", root.data);
+
+    if(sum < value) {
+      printParentsTillValue(root.parent, value, sum);
+    }
+  }
+
 
   public class TreeNode {
     public int data;
