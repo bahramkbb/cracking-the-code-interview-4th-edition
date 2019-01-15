@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ch05q02 {
+public class ch05q03 {
   public static void main(String args[]) {
     System.out.printf("Question: next smallest and biggest numbers with same 1's\n");
 
